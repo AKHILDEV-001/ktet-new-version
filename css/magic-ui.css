@@ -1,0 +1,51 @@
+.animate-marquee-container {
+    display: flex;
+    overflow: hidden;
+    /* Softens the edges of the marquee */
+    -webkit-mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+}
+
+.animate-marquee {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-around;
+    min-width: 100%;
+    /* Slower, more elegant animation speed */
+    animation: marquee 40s linear infinite;
+}
+
+/* Pause the animation on hover */
+.animate-marquee-container:hover .animate-marquee {
+    animation-play-state: paused;
+}
+
+ @keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.marquee-card {
+    width: 16rem; /* 256px */
+    height: 8rem; /* 128px */
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.75rem; /* 12px */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: 1px solid #e5e7eb; /* gray-200 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Add a subtle grow effect on hover */
+.marquee-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
