@@ -17,6 +17,16 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+// Debug: Check if keys are present
+if (typeof window === 'undefined') {
+    console.log('Firebase Config Check (Server-Side/Build):');
+    console.log('API Key present:', !!firebaseConfig.apiKey);
+    console.log('Project ID present:', !!firebaseConfig.projectId);
+    if (!firebaseConfig.apiKey) {
+        console.error('CRITICAL ERROR: NEXT_PUBLIC_FIREBASE_API_KEY is missing in environment variables!');
+    }
+}
+
 // Initialize Firebase (singleton pattern)
 let app;
 if (!getApps().length) {
