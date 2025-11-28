@@ -9,8 +9,8 @@ export async function POST() {
             key_secret: process.env.RAZORPAY_KEY_SECRET,
         });
 
-        // Amount for premium subscription (99 INR)
-        const amount = 99;
+        // Amount for premium subscription (2 INR for live testing)
+        const amount = 2;
 
         const options = {
             amount: amount * 100, // Razorpay takes amount in "paise" (99 * 100 = 9900 paise)

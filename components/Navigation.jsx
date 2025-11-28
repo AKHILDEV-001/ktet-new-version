@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import PremiumModal from '@/components/PremiumModal';
 
 export default function Navigation() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isPracticeHubOpen, setIsPracticeHubOpen] = useState(false);
+    const [showPremiumModal, setShowPremiumModal] = useState(false);
     const { user, logout, openLoginModal } = useAuth();
     const pathname = usePathname();
     const router = useRouter();
@@ -26,6 +28,16 @@ export default function Navigation() {
             router.push('/');
         } catch (error) {
             console.error('Logout failed', error);
+        }
+    };
+
+    const handlePremiumClick = () => {
+        if (!user) {
+            openLoginModal();
+            setIsSidebarOpen(false);
+        } else {
+            setShowPremiumModal(true);
+            setIsSidebarOpen(false);
         }
     };
 
@@ -195,7 +207,7 @@ export default function Navigation() {
 
                     <div className="p-4 border-t">
                         <button
-                            onClick={() => alert("Premium features coming soon!")}
+                            onClick={handlePremiumClick}
                             className="w-full flex items-center px-4 py-2 text-purple-700 font-bold rounded-lg bg-purple-50 hover:bg-purple-100 transition-colors border border-purple-200 mb-2"
                         >
                             <svg className="h-5 w-5 mr-3 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -232,6 +244,9 @@ export default function Navigation() {
                     </div>
                 </div>
             </aside >
+
+            {/* Premium Modal */}
+            <PremiumModal isOpen={showPremiumModal} onClose={() => setShowPremiumModal(false)} />
         </>
     );
 }
