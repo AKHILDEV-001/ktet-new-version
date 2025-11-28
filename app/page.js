@@ -19,6 +19,7 @@ export const metadata = {
   },
 };
 
+// Cache bust: 2025-11-28 12:57
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
