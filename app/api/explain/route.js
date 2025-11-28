@@ -91,13 +91,22 @@ export async function POST(req) {
             })
         });
 
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("OpenRouter API Error:", errorText);
+            return NextResponse.json({ error: "AI Service Error", details: errorText }, { status: response.status });
+        }
+
         const data = await response.json();
-        if (!data.choices || data.choices.length === 0) throw new Error("No AI response");
+        if (!data.choices || data.choices.length === 0) {
+            console.error("Unexpected AI Response:", data);
+            throw new Error("No AI response");
+        }
 
         return NextResponse.json({ explanation: data.choices[0].message.content }, { status: 200 });
 
     } catch (error) {
-        console.error(error);
+        console.error("Explain API Error:", error);
         return NextResponse.json({ error: 'Failed to generate explanation' }, { status: 500 });
     }
 }
