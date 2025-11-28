@@ -82,12 +82,13 @@ export default function Navigation() {
             </header>
 
             {/* Sidebar Overlay */}
-            {isSidebarOpen && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
-                    onClick={() => setIsSidebarOpen(false)}
-                ></div>
-            )}
+
+            <div
+                className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                    }`}
+                onClick={() => setIsSidebarOpen(false)}
+                aria-hidden="true"
+            />
 
             {/* Sidebar */}
             <aside
