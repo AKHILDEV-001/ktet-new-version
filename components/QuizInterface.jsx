@@ -29,6 +29,11 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
     const [showFeedback, setShowFeedback] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
 
+    // Guru State
+    const [guruExplanation, setGuruExplanation] = useState(null);
+    const [isGuruLoading, setIsGuruLoading] = useState(false);
+    const [showGuruModal, setShowGuruModal] = useState(false);
+
     // Exam start state
     const isExamMode = mode === 'exam';
     const [hasStarted, setHasStarted] = useState(!isExamMode);
@@ -192,6 +197,35 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
     // Start Exam Handler
     const handleStartExam = () => {
         setHasStarted(true);
+    };
+
+    // Guru Logic
+    const fetchGuruExplanation = async (questionText, userAnswer, correctAnswer) => {
+        setIsGuruLoading(true);
+        setShowGuruModal(true);
+        setGuruExplanation(null);
+
+        try {
+            const res = await fetch('/api/explain', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    question: questionText,
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer
+                })
+            });
+
+            if (!res.ok) throw new Error('Failed to get explanation');
+
+            const data = await res.json();
+            setGuruExplanation(data.explanation);
+        } catch (err) {
+            console.error(err);
+            setGuruExplanation('<p class="text-red-500">The Guru is meditating and cannot answer right now.</p>');
+        } finally {
+            setIsGuruLoading(false);
+        }
     };
 
     // Loading state
@@ -555,6 +589,23 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
                                         {currentQuestion.explanation}
                                     </p>
                                 )}
+
+                                {/* Ask Guru Button for Incorrect Answers */}
+                                {selectedAnswer !== currentQuestion.correctIndex && (
+                                    <button
+                                        onClick={() => fetchGuruExplanation(
+                                            currentQuestion.question,
+                                            currentQuestion.options[selectedAnswer],
+                                            currentQuestion.options[currentQuestion.correctIndex]
+                                        )}
+                                        className="mt-4 flex items-center gap-2 text-purple-600 font-semibold hover:text-purple-700 transition-colors bg-white px-4 py-2 rounded-lg border border-purple-200 shadow-sm"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                        Ask Guru for a detailed explanation
+                                    </button>
+                                )}
                             </div>
                         )}
                     </div>
@@ -577,6 +628,46 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
                     </div>
                 </div>
             </div>
+            {/* Guru Modal */}
+            {showGuruModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={() => setShowGuruModal(false)}>
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+                        <div className="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
+                            <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                                <span className="text-2xl">🧘‍♂️</span> Guru's Wisdom
+                            </h3>
+                            <button onClick={() => setShowGuruModal(false)} className="text-gray-400 hover:text-gray-600">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div className="p-6">
+                            {isGuruLoading ? (
+                                <div className="flex flex-col items-center justify-center py-8">
+                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+                                    <p className="text-purple-600 font-medium">Consulting the Guru...</p>
+                                </div>
+                            ) : (
+                                <div
+                                    className="prose prose-purple max-w-none"
+                                    dangerouslySetInnerHTML={{ __html: guruExplanation }}
+                                />
+                            )}
+                        </div>
+
+                        <div className="p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
+                            <button
+                                onClick={() => setShowGuruModal(false)}
+                                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-xl transition-colors"
+                            >
+                                Understood, Thank You!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
