@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: "KTET Quiz App - Free Practice for Kerala Teacher Eligibility Test",
-  description: "Free KTET practice quiz for Category 1, 2, 3, and 4. Prepare for the Kerala Teacher Eligibility Test with our mock tests and syllabus guides.",
+  description: "Free KTET practice quiz for Category 1, 2, 3, and 4. Prepare for the Kerala Teacher Eligibility Test (KTET) with our comprehensive mock tests and syllabus guides.",
   keywords: "KTET, Kerala Teacher Eligibility Test, KTET Quiz, KTET Mock Test, KTET Syllabus, KTET Preparation, KTET Online, KTET Exam, KTET Category 1, KTET Category 2, KTET Category 3, KTET Category 4",
   robots: "index, follow",
   openGraph: {
@@ -19,7 +19,6 @@ export const metadata = {
   },
 };
 
-// Cache bust: 2025-11-28 12:57
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
