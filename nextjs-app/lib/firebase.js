@@ -57,3 +57,116 @@ googleProvider.setCustomParameters({
 });
 
 export default app;
+
+// ============================================
+// Quiz Functions
+// ============================================
+
+import {
+    collection,
+    addDoc,
+    doc,
+    updateDoc,
+    serverTimestamp,
+    arrayUnion,
+    getDoc,
+    setDoc
+} from 'firebase/firestore';
+
+/**
+ * Save quiz result to Firestore
+ * @param {Object} user - Firebase auth user object
+ * @param {number} score - Number of correct answers
+ * @param {number} totalQuestions - Total number of questions
+ * @param {string} category - Quiz category
+ */
+export async function saveQuizResult(user, score, totalQuestions, category) {
+    if (!user) {
+        console.warn('Cannot save quiz result: user not authenticated');
+        return;
+    }
+
+    try {
+        const percentage = Math.round((score / totalQuestions) * 100);
+
+        await addDoc(collection(db, `users/${user.uid}/quizHistory`), {
+            score,
+            totalQuestions,
+            category,
+            percentage,
+            timestamp: serverTimestamp()
+        });
+
+        console.log('Quiz result saved successfully');
+    } catch (error) {
+        console.error('Error saving quiz result:', error);
+        throw error;
+    }
+}
+
+/**
+ * Update seen questions for a user
+ * @param {Object} user - Firebase auth user object
+ * @param {string} category - Quiz category
+ * @param {Array<string>} questionIds - Array of question IDs to mark as seen
+ */
+export async function updateSeenQuestions(user, category, questionIds) {
+    if (!user) {
+        console.warn('Cannot update seen questions: user not authenticated');
+        return;
+    }
+
+    try {
+        const userRef = doc(db, 'users', user.uid);
+
+        // Check if user document exists
+        const userDoc = await getDoc(userRef);
+
+        if (!userDoc.exists()) {
+            // Create user document with seen questions
+            await setDoc(userRef, {
+                seenQuestions: {
+                    [category]: questionIds
+                },
+                createdAt: serverTimestamp()
+            });
+        } else {
+            // Update existing document
+            await updateDoc(userRef, {
+                [`seenQuestions.${category}`]: arrayUnion(...questionIds)
+            });
+        }
+
+        console.log('Seen questions updated successfully');
+    } catch (error) {
+        console.error('Error updating seen questions:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get seen questions for a user and category
+ * @param {Object} user - Firebase auth user object
+ * @param {string} category - Quiz category
+ * @returns {Array<string>} - Array of seen question IDs
+ */
+export async function getSeenQuestions(user, category) {
+    if (!user) {
+        return [];
+    }
+
+    try {
+        const userRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if (!userDoc.exists()) {
+            return [];
+        }
+
+        const userData = userDoc.data();
+        return (userData.seenQuestions && userData.seenQuestions[category]) || [];
+    } catch (error) {
+        console.error('Error getting seen questions:', error);
+        return [];
+    }
+}

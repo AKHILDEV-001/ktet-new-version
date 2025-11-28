@@ -4,6 +4,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import {
     onAuthStateChanged,
     signInWithPopup,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    updateProfile,
     signOut,
     GoogleAuthProvider
 } from 'firebase/auth';
@@ -55,17 +58,26 @@ export const AuthProvider = ({ children }) => {
                 createdAt: serverTimestamp(),
                 lastLogin: serverTimestamp(),
                 isPremium: false,
+                seenQuestions: {}, // Initialize for new users
                 roles: ['user']
             });
         } else {
             // Update existing user document
-            await setDoc(userRef, {
+            const updateData = {
                 lastLogin: serverTimestamp(),
                 displayName: user.displayName, // Update in case it changed
                 photoURL: user.photoURL
-            }, { merge: true });
+            };
+
+            // Initialize seenQuestions if it doesn't exist (legacy compatibility)
+            if (!userSnap.data()?.seenQuestions) {
+                updateData.seenQuestions = {};
+            }
+
+            await setDoc(userRef, updateData, { merge: true });
         }
     };
+
 
     const loginWithGoogle = async () => {
         try {
@@ -73,6 +85,30 @@ export const AuthProvider = ({ children }) => {
             setShowLoginModal(false);
         } catch (error) {
             console.error("Login failed:", error);
+            throw error;
+        }
+    };
+
+    const loginWithEmail = async (email, password) => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            setShowLoginModal(false);
+        } catch (error) {
+            console.error("Email login failed:", error);
+            throw error;
+        }
+    };
+
+    const signUpWithEmail = async (email, password, displayName) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            // Update display name
+            if (displayName) {
+                await updateProfile(userCredential.user, { displayName });
+            }
+            setShowLoginModal(false);
+        } catch (error) {
+            console.error("Sign up failed:", error);
             throw error;
         }
     };
@@ -93,6 +129,8 @@ export const AuthProvider = ({ children }) => {
             user,
             loading,
             loginWithGoogle,
+            loginWithEmail,
+            signUpWithEmail,
             logout,
             showLoginModal,
             openLoginModal,
