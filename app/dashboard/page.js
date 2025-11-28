@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { auth, getQuizHistory, getUserData, resetCategoryProgress } from '../../lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import ProgressChart from '../../components/ProgressChart';
+import PremiumModal from '../../components/PremiumModal';
 import Link from 'next/link';
 
 export default function Dashboard() {
@@ -22,6 +23,7 @@ export default function Dashboard() {
     const [selectedResetCategory, setSelectedResetCategory] = useState('');
     const [resetStatus, setResetStatus] = useState({ type: '', message: '' });
     const [userData, setUserData] = useState(null);
+    const [showPremiumModal, setShowPremiumModal] = useState(false);
 
     const router = useRouter();
 
@@ -151,13 +153,24 @@ export default function Dashboard() {
                             <h2 className="text-2xl font-bold mb-2">Welcome back, {user.displayName || user.email || 'Learner'}!</h2>
                             <p className="opacity-90">Ready to continue your KTET preparation?</p>
                         </div>
-                        <div className="flex space-x-4">
-                            <Link href="/" className="bg-white text-purple-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors shadow-lg">
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <button
+                                onClick={() => setShowPremiumModal(true)}
+                                className="bg-yellow-400 text-purple-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-300 transition-colors shadow-lg flex items-center justify-center"
+                            >
+                                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                Upgrade to Premium
+                            </button>
+                            <Link href="/" className="bg-white text-purple-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors shadow-lg text-center">
                                 Continue Learning
                             </Link>
                         </div>
                     </div>
                 </div>
+
+                <PremiumModal isOpen={showPremiumModal} onClose={() => setShowPremiumModal(false)} />
 
                 {/* Stats Overview */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -262,8 +275,8 @@ export default function Dashboard() {
                                 <button
                                     onClick={handleResetProgress}
                                     className={`w-full sm:w-auto font-bold py-3 px-6 rounded-lg transition-colors shadow-md ${resetStatus.type === 'success' ? 'bg-green-500 text-white hover:bg-green-600' :
-                                            resetStatus.type === 'error' ? 'bg-red-700 text-white' :
-                                                'bg-red-500 text-white hover:bg-red-600'
+                                        resetStatus.type === 'error' ? 'bg-red-700 text-white' :
+                                            'bg-red-500 text-white hover:bg-red-600'
                                         }`}
                                 >
                                     {resetStatus.message || 'Reset Progress'}

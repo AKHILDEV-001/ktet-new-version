@@ -23,6 +23,7 @@ export const metadata = {
 
 import Navigation from "@/components/Navigation";
 import LoginModal from "@/components/LoginModal";
+import Script from "next/script";
 
 export default function RootLayout({ children }) {
   return (
@@ -35,6 +36,10 @@ export default function RootLayout({ children }) {
           <LoginModal />
           {children}
         </AuthProvider>
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
