@@ -105,9 +105,9 @@ export default function LoginModal() {
 
             {/* Modal Content */}
             <div
-                className={`relative w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-8 shadow-2xl transition-all duration-500 ${isClosing
-                        ? 'translate-y-20 scale-95 opacity-0'
-                        : 'translate-y-0 scale-100 opacity-100'
+                className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all duration-500 ${isClosing
+                    ? 'translate-y-20 scale-95 opacity-0'
+                    : 'translate-y-0 scale-100 opacity-100'
                     } ${error ? 'animate-shake' : ''}`}
             >
                 {/* Animated Background Gradient */}
@@ -126,12 +126,12 @@ export default function LoginModal() {
 
                 {/* Header */}
                 <div className="relative z-10 text-center">
-                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 shadow-lg animate-float">
-                        <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-purple-700 shadow-lg animate-float">
+                        <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                     </div>
-                    <h2 className="mb-2 text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                    <h2 className="mb-2 text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
                         {isSignUp ? 'Create Account' : 'Welcome Back!'}
                     </h2>
                     <p className="text-gray-600">

@@ -453,7 +453,7 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
     const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-4 px-3 sm:py-8 sm:px-4">
             <div className="max-w-4xl mx-auto">
                 {/* Timer Display (Exam Mode Only) */}
                 {isExamMode && (
@@ -502,7 +502,7 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
                 {/* Quiz Card */}
                 <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
                     {/* Header */}
-                    <div className="p-6 border-b border-gray-200">
+                    <div className="p-4 sm:p-6 border-b border-gray-200">
                         <div className="flex justify-between items-center mb-4">
                             <span className="text-sm font-semibold text-gray-600">
                                 Question {currentQuestionIndex + 1} of {questions.length}
@@ -521,13 +521,13 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
                     </div>
 
                     {/* Question */}
-                    <div className="p-8">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-6 leading-relaxed">
+                    <div className="p-4 sm:p-8">
+                        <h3 className="text-lg sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 leading-relaxed">
                             {currentQuestion.question}
                         </h3>
 
                         {/* Options */}
-                        <div className="space-y-3">
+                        <div className="space-y-2 sm:space-y-3">
                             {currentQuestion.options.map((option, index) => {
                                 const isSelected = selectedAnswer === index;
                                 const isCorrect = index === currentQuestion.correctIndex;
@@ -539,7 +539,7 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
                                         key={index}
                                         onClick={() => handleOptionClick(index)}
                                         disabled={selectedAnswer !== null}
-                                        className={`w-full flex items-center p-4 rounded-xl border-2 transition-all ${showCorrect
+                                        className={`w-full flex items-center p-3 sm:p-4 rounded-xl border-2 transition-all ${showCorrect
                                             ? 'border-green-500 bg-green-50 text-green-700'
                                             : showIncorrect
                                                 ? 'border-red-500 bg-red-50 text-red-700'
@@ -611,7 +611,7 @@ export default function QuizInterface({ category, mode = 'standard', onExit }) {
                     </div>
 
                     {/* Footer */}
-                    <div className="p-6 bg-gray-50 border-t border-gray-200">
+                    <div className="p-4 sm:p-6 bg-gray-50 border-t border-gray-200">
                         <button
                             onClick={handleNext}
                             disabled={selectedAnswer === null}

@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ArrowRight, BookOpen, Calculator, Languages, Microscope, FileText, CheckCircle, Smartphone, BarChart3, BrainCircuit } from "lucide-react";
 
 export const metadata = {
   title: "KTET Quiz App - Free Practice for Kerala Teacher Eligibility Test",
@@ -21,74 +30,70 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="py-10 sm:py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2 animated-gradient-text">
-              Your Path to KTET Success Starts Here
+      <section className="relative pt-20 pb-32 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-[500px] h-[500px] bg-accent/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-block mb-4 px-4 py-1.5 rounded-full bg-background/50 backdrop-blur-md border shadow-sm">
+              <span className="text-sm font-semibold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                ✨ The #1 Platform for KTET Preparation
+              </span>
+            </div>
+
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight">
+              Master the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">KTET Exam</span> <br className="hidden sm:block" />
+              with Confidence
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-xs sm:max-w-md md:max-w-3xl mx-auto">
-              The intelligent platform for your complete KTET preparation.
+
+            <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+              Join thousands of future teachers using our AI-powered platform.
+              Personalized quizzes, instant feedback, and comprehensive syllabus coverage.
             </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button asChild size="lg" className="w-full sm:w-auto text-lg h-14 px-8 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
+                <Link href="#categories-section">
+                  Start Practicing Free
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="w-full sm:w-auto text-lg h-14 px-8 rounded-xl bg-background/50 backdrop-blur-sm hover:bg-accent hover:text-accent-foreground transition-all">
+                <Link href="/syllabus">
+                  View Syllabus
+                </Link>
+              </Button>
+            </div>
           </div>
 
-          {/* Animated Marquee */}
-          <div className="relative animate-marquee-container">
-            <div className="animate-marquee">
-              <div className="flex items-center gap-6 mx-3">
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-purple-700">AI-Generated Quizzes</h3>
-                  <p className="text-sm text-gray-600 mt-1">Fresh questions every time you practice.</p>
+          {/* Floating Stats - Keeping custom for now as they are specific */}
+          <div className="mt-16 sm:mt-24 relative max-w-5xl mx-auto">
+            <div className="bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl p-6 rounded-2xl transform rotate-[-2deg] hover:rotate-0 transition-all duration-500 absolute -top-10 left-4 sm:left-10 w-48 hidden md:block animate-float">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                  <CheckCircle className="w-6 h-6" />
                 </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-red-700">Instant Feedback</h3>
-                  <p className="text-sm text-gray-600 mt-1">Learn from your mistakes immediately.</p>
-                </div>
-                <div className="marquee-card bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
-                  <h3 className="font-bold text-lg">Create an Account</h3>
-                  <p className="text-sm opacity-90 mt-1">To unlock your personal dashboard!</p>
-                </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-blue-700">Full Syllabus Coverage</h3>
-                  <p className="text-sm text-gray-600 mt-1">Covering all categories of the KTET exam.</p>
-                </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-amber-700">Mobile Friendly</h3>
-                  <p className="text-sm text-gray-600 mt-1">Practice anytime, anywhere, on any device.</p>
-                </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-green-700">Detailed Analytics</h3>
-                  <p className="text-sm text-gray-600 mt-1">Track your progress and identify weak areas.</p>
+                <div>
+                  <p className="text-xs text-gray-500">Success Rate</p>
+                  <p className="font-bold text-gray-800">92%</p>
                 </div>
               </div>
             </div>
-            <div className="animate-marquee" aria-hidden="true">
-              <div className="flex items-center gap-6 mx-3">
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-purple-700">AI-Generated Quizzes</h3>
-                  <p className="text-sm text-gray-600 mt-1">Fresh questions every time you practice.</p>
+
+            <div className="bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl p-6 rounded-2xl transform rotate-[2deg] hover:rotate-0 transition-all duration-500 absolute -top-16 right-4 sm:right-10 w-52 hidden md:block animate-float" style={{ animationDelay: '1s' }}>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <BookOpen className="w-6 h-6" />
                 </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-red-700">Instant Feedback</h3>
-                  <p className="text-sm text-gray-600 mt-1">Learn from your mistakes immediately.</p>
-                </div>
-                <div className="marquee-card bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
-                  <h3 className="font-bold text-lg">Create an Account</h3>
-                  <p className="text-sm opacity-90 mt-1">To unlock your personal dashboard!</p>
-                </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-blue-700">Full Syllabus Coverage</h3>
-                  <p className="text-sm text-gray-600 mt-1">Covering all categories of the KTET exam.</p>
-                </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-amber-700">Mobile Friendly</h3>
-                  <p className="text-sm text-gray-600 mt-1">Practice anytime, anywhere, on any device.</p>
-                </div>
-                <div className="marquee-card">
-                  <h3 className="font-bold text-lg text-green-700">Detailed Analytics</h3>
-                  <p className="text-sm text-gray-600 mt-1">Track your progress and identify weak areas.</p>
+                <div>
+                  <p className="text-xs text-gray-500">Questions</p>
+                  <p className="font-bold text-gray-800">5000+</p>
                 </div>
               </div>
             </div>
@@ -96,13 +101,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Modern Marquee Section */}
+      <section className="py-10 bg-background/50 backdrop-blur-sm border-y">
+        <div className="relative animate-marquee-container">
+          <div className="animate-marquee flex gap-8">
+            {[
+              { title: "AI-Generated Quizzes", desc: "Fresh questions every time", icon: BrainCircuit, color: "text-primary", bg: "bg-primary/10" },
+              { title: "Instant Feedback", desc: "Learn from mistakes", icon: CheckCircle, color: "text-secondary", bg: "bg-secondary/10" },
+              { title: "Full Syllabus", desc: "All categories covered", icon: FileText, color: "text-accent-foreground", bg: "bg-accent" },
+              { title: "Mobile Friendly", desc: "Practice anywhere", icon: Smartphone, color: "text-green-600", bg: "bg-green-50" },
+              { title: "Detailed Analytics", desc: "Track your progress", icon: BarChart3, color: "text-orange-600", bg: "bg-orange-50" },
+              { title: "AI-Generated Quizzes", desc: "Fresh questions every time", icon: BrainCircuit, color: "text-primary", bg: "bg-primary/10" },
+              { title: "Instant Feedback", desc: "Learn from mistakes", icon: CheckCircle, color: "text-secondary", bg: "bg-secondary/10" },
+            ].map((item, i) => (
+              <div key={i} className={`flex-shrink-0 w-72 p-4 rounded-xl border ${item.bg} flex items-center gap-4`}>
+                <div className={`w-12 h-12 rounded-full bg-background flex items-center justify-center shadow-sm ${item.color}`}>
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-foreground">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SEO Content Section */}
-      <section className="text-center py-8 px-4 bg-white">
+      <section className="text-center py-16 px-4 bg-background">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-4 text-gray-800">
+          <h2 className="text-3xl font-bold mb-4 text-foreground">
             Prepare for the Kerala Teacher Eligibility Test (KTET)
           </h2>
-          <p className="max-w-3xl mx-auto text-gray-700">
+          <p className="max-w-3xl mx-auto text-muted-foreground leading-relaxed">
             Our free interactive quiz is designed to help you master the KTET syllabus. Practice with
             questions covering Child Development & Pedagogy, Mathematics, Science, and more. Select a
             category and start your preparation today to secure your teaching career in Kerala.
@@ -111,162 +143,131 @@ export default function Home() {
       </section>
 
       {/* Category Cards Section */}
-      <section id="categories-section" className="mt-12 sm:mt-16 md:mt-20">
+      <section id="categories-section" className="py-20 relative bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center mb-2">Explore Our Quiz Categories</h2>
-          <p className="text-center text-gray-600 mb-8 sm:mb-12">
-            All quizzes are based on the KTET Category I syllabus.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Child Development & Pedagogy */}
-            <div className="category-card bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl h-full flex flex-col">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold">Child Development & Pedagogy</h3>
-              </div>
-              <p className="text-gray-600 text-sm sm:text-base mb-4">
-                Crucial topics for understanding student psychology and teaching methods.
-              </p>
-              <Link href="/quiz/child-development-pedagogy" className="w-full text-center bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all btn-bounce mt-auto block">
-                <span>Start Section</span>
-              </Link>
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-foreground">Explore Our Quiz Categories</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive practice materials for all KTET categories. Select a subject to begin your journey.
+            </p>
+          </div>
 
-            {/* Mathematics */}
-            <div className="category-card bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl h-full flex flex-col">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold">Mathematics</h3>
-              </div>
-              <p className="text-gray-600 text-sm sm:text-base mb-4">
-                Sharpen your quantitative reasoning skills.
-              </p>
-              <Link href="/quiz/mathematics" className="w-full text-center bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition-all btn-bounce mt-auto block">
-                <span>Start Section</span>
-              </Link>
-            </div>
-
-            {/* Malayalam */}
-            <div className="category-card bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl h-full flex flex-col">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold">Malayalam</h3>
-              </div>
-              <p className="text-gray-600 text-sm sm:text-base mb-4">
-                Test your knowledge of Malayalam grammar and comprehension.
-              </p>
-              <Link href="/quiz/malayalam" className="w-full text-center bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold py-3 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all btn-bounce mt-auto block">
-                <span>Start Section</span>
-              </Link>
-            </div>
-
-            {/* English */}
-            <div className="category-card bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl h-full flex flex-col">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold">English</h3>
-              </div>
-              <p className="text-gray-600 text-sm sm:text-base mb-4">
-                Improve your English language and comprehension skills.
-              </p>
-              <Link href="/quiz/english" className="w-full text-center bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-all btn-bounce mt-auto block">
-                <span>Start Section</span>
-              </Link>
-            </div>
-
-            {/* Science */}
-            <div className="category-card bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl h-full flex flex-col">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold">Science</h3>
-              </div>
-              <p className="text-gray-600 text-sm sm:text-base mb-4">
-                Test your scientific aptitude and knowledge.
-              </p>
-              <Link href="/quiz/science" className="w-full text-center bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold py-3 rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all btn-bounce mt-auto block">
-                <span>Start Section</span>
-              </Link>
-            </div>
-
-            {/* KTET Syllabus */}
-            <Link
-              href="/syllabus"
-              className="category-card block bg-white p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl group h-full flex flex-col"
-            >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
-                  <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold">KTET Syllabus</h3>
-              </div>
-              <p className="text-gray-600 text-sm sm:text-base mb-4">
-                Access the complete syllabus for all categories.
-              </p>
-              <span className="w-full mt-auto block text-center bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold py-3 rounded-lg group-hover:from-indigo-600 group-hover:to-indigo-700 transition-all">
-                View Options
-              </span>
-            </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Child Development",
+                desc: "Master student psychology and teaching methods.",
+                icon: BookOpen,
+                color: "text-blue-600",
+                bg: "bg-blue-50",
+                href: "/quiz/child-development-pedagogy",
+                btnVariant: "default"
+              },
+              {
+                title: "Mathematics",
+                desc: "Sharpen your quantitative reasoning skills.",
+                icon: Calculator,
+                color: "text-green-600",
+                bg: "bg-green-50",
+                href: "/quiz/mathematics",
+                btnVariant: "default"
+              },
+              {
+                title: "Malayalam",
+                desc: "Test your knowledge of Malayalam grammar.",
+                icon: Languages,
+                color: "text-purple-600",
+                bg: "bg-purple-50",
+                href: "/quiz/malayalam",
+                btnVariant: "default"
+              },
+              {
+                title: "English",
+                desc: "Improve your English language skills.",
+                icon: Languages,
+                color: "text-red-600",
+                bg: "bg-red-50",
+                href: "/quiz/english",
+                btnVariant: "default"
+              },
+              {
+                title: "Science",
+                desc: "Test your scientific aptitude and knowledge.",
+                icon: Microscope,
+                color: "text-amber-600",
+                bg: "bg-amber-50",
+                href: "/quiz/science",
+                btnVariant: "default"
+              },
+              {
+                title: "KTET Syllabus",
+                desc: "Access the complete syllabus for all categories.",
+                icon: FileText,
+                color: "text-indigo-600",
+                bg: "bg-indigo-50",
+                href: "/syllabus",
+                btnVariant: "secondary",
+                isSyllabus: true
+              }
+            ].map((category, index) => (
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50">
+                <CardHeader>
+                  <div className={`w-14 h-14 rounded-xl ${category.bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <category.icon className={`w-7 h-7 ${category.color}`} />
+                  </div>
+                  <CardTitle className="text-xl">{category.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base">{category.desc}</CardDescription>
+                </CardContent>
+                <CardFooter>
+                  <Button asChild className="w-full" variant={category.btnVariant}>
+                    <Link href={category.href}>
+                      {category.isSyllabus ? 'View Options' : 'Start Quiz'} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-gray-50 py-12 px-4">
+      <section className="py-16 px-4">
         <div className="container mx-auto max-w-3xl">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-semibold text-lg">What is the KTET exam?</h3>
-              <p className="text-gray-600 mt-1">
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Frequently Asked Questions</h2>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>What is the KTET exam?</AccordionTrigger>
+              <AccordionContent>
                 The Kerala Teacher Eligibility Test (KTET) is an exam to assess the quality of teacher candidates
                 for Lower Primary, Upper Primary, and High School classes in Kerala.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg">Which categories are covered in this quiz?</h3>
-              <p className="text-gray-600 mt-1">
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Which categories are covered in this quiz?</AccordionTrigger>
+              <AccordionContent>
                 This quiz app provides questions for all major categories of the KTET exam, helping you prepare
                 comprehensively.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg">Is this quiz app free?</h3>
-              <p className="text-gray-600 mt-1">
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Is this quiz app free?</AccordionTrigger>
+              <AccordionContent>
                 Yes, this practice quiz is completely free to use. Our goal is to provide accessible resources for
                 all KTET aspirants.
-              </p>
-            </div>
-          </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-white mt-12 sm:mt-16 border-t">
-        <div className="container mx-auto px-6 py-6 text-center text-gray-500 text-sm">
+      <footer className="bg-background mt-12 sm:mt-16 border-t py-12">
+        <div className="container mx-auto px-6 text-center text-muted-foreground text-sm">
           <p>&copy; 2024 KTET Quiz Hub. All Rights Reserved.</p>
-          <p className="mt-1">Last updated: Nov 27, 2025</p>
+          <p className="mt-2">Last updated: Nov 27, 2025</p>
         </div>
       </footer>
 
