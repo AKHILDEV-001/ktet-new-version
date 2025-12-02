@@ -95,7 +95,7 @@ export default function LoginModal() {
     if (!showLoginModal && !isClosing) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4">
             {/* Backdrop */}
             <div
                 className={`absolute inset-0 bg-gray-900/60 backdrop-blur-sm transition-all duration-400 ${isClosing ? 'opacity-0' : 'opacity-100'
@@ -105,7 +105,7 @@ export default function LoginModal() {
 
             {/* Modal Content */}
             <div
-                className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all duration-500 ${isClosing
+                className={`relative w-full max-w-sm max-h-[90vh] max-h-[90dvh] overflow-y-auto transform rounded-2xl bg-white p-4 sm:p-6 shadow-2xl transition-all duration-500 ${isClosing
                     ? 'translate-y-20 scale-95 opacity-0'
                     : 'translate-y-0 scale-100 opacity-100'
                     } ${error ? 'animate-shake' : ''}`}
